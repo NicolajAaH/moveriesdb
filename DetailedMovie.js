@@ -8,7 +8,7 @@ export default function DetailedMovie({ route, navigation }) {
     const { name, setName } = useContext(UserContext);
 
     // State holding the data of the selected movie.
-    const [data, setData] = useState({});
+    const [movie, setMovie] = useState({});
 
     // Get ID of movie from the navigator function
     const { movieId } = route.params;
@@ -22,26 +22,25 @@ export default function DetailedMovie({ route, navigation }) {
     function getDetails() {
         fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.API_KEY}&language=en-US`)
             .then((response) => response.json())
-            .then((data) => setData(data));
+            .then((data) => setMovie(data));
     }
 
     return (
         <div style={styles.colorForDiv}>
             <Topbar name={name} navigation={navigation}></Topbar>
             <div style={styles.divInline}>
-                <Image
-                    style={styles.image}
-                    source={{ uri: `https://image.tmdb.org/t/p/original${data.poster_path}`, }}
+                <Image style={styles.image}
+                    source={{ uri: `https://image.tmdb.org/t/p/original${movie.poster_path}` }}
                 />
                 <View style={styles.container}>
-                    <Text style={styles.text}>{data.title}</Text>
+                    <Text style={styles.text}>{movie.title}</Text>
                     <ScrollView>
-                        <Text style={styles.data}>{data.overview}</Text>
-                        <Text style={styles.data}>Popularity: {data.popularity}</Text>
-                        <Text style={styles.data}>Status: {data.status}</Text>
-                        <Text style={styles.data}>Runtime: {data.runtime} minutes</Text>
-                        <Text style={styles.data}>Original language: {data.original_language} </Text>
-                        <Text style={styles.data}>Budget: {data.budget}</Text>
+                        <Text style={styles.data}>{movie.overview}</Text>
+                        <Text style={styles.data}>Popularity: {movie.popularity}</Text>
+                        <Text style={styles.data}>Status: {movie.status}</Text>
+                        <Text style={styles.data}>Runtime: {movie.runtime} minutes</Text>
+                        <Text style={styles.data}>Original language: {movie.original_language} </Text>
+                        <Text style={styles.data}>Budget: {movie.budget}</Text>
                     </ScrollView>
                 </View>
             </div>
