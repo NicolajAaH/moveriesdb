@@ -31,7 +31,7 @@ export default function DetailedMovie({ route, navigation }) {
             <div style={styles.divInline}>
                 <Image
                     style={styles.image}
-                    source={{ uri: `https://image.tmdb.org/t/p/original${data.poster_path}`,}}
+                    source={{ uri: `https://image.tmdb.org/t/p/original${data.poster_path}`, }}
                 />
                 <View style={styles.container}>
                     <Text style={styles.text}>{data.title}</Text>

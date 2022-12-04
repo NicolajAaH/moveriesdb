@@ -67,21 +67,14 @@ export default function FrontPageComp({ navigation }) {
 const Movie = ({ navigation, title, movieId, poster_path }) => (
     <View style={styles.item}>
         <div style={styles.divCenter}>
-        <Image
-                    style={styles.imageItem}
-                    source={{ uri: `https://image.tmdb.org/t/p/original${poster_path}`,}}
-                />
-        <Text
-            onPress={() =>
-                navigation.navigate("Details", {
-                    movieId,
-                })
-            }
-            style={styles.title} >
-            {title}
-        </Text>
+            <Image style={styles.imageItem}
+                source={{ uri: `https://image.tmdb.org/t/p/original${poster_path}` }}
+            />
+            <Text onPress={() => navigation.navigate("Details", { movieId })}
+                style={styles.title}>
+                {title}
+            </Text>
         </div>
-        
     </View>
 );
 
