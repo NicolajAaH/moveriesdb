@@ -11,14 +11,6 @@ export default function Topbar({ name, navigation }) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff",
-    },
-    title: {
-        fontSize: 28,
-        marginBottom: 10,
-    },
     image: {
         width: "100%",
         height: "300px",

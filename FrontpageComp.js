@@ -24,9 +24,9 @@ export default function FrontPageComp({ navigation }) {
             .then((data) => setData(data.results));
     }
 
-    // Render function which returns the Item component
-    const renderItem = ({ item }) => (
-        <Item navigation={navigation} movieId={item.id} title={item.title + " (" + item.release_date.substring(0, 4) + ")"} />
+    // Render function which returns the Movie component
+    const renderMovie = ({ item }) => (
+        <Movie navigation={navigation} movieId={item.id} title={item.title + " (" + item.release_date.substring(0, 4) + ")"} />
     );
 
     const changeName = () => {
@@ -55,16 +55,16 @@ export default function FrontPageComp({ navigation }) {
             <View style={styles.container}>
                 <FlatList
                     data={data}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id}
+                    renderItem={renderMovie}
+                    keyExtractor={(movie) => movie.id}
                 />
             </View>
         </div>
     );
 }
 
-//Handle click on item, navigate to details page
-const Item = ({ navigation, title, movieId }) => (
+//Handle clicks on movie; it navigates to details page of movie
+const Movie = ({ navigation, title, movieId }) => (
     <View style={styles.item}>
         <Text
             onPress={() =>

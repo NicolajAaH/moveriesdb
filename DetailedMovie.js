@@ -10,7 +10,7 @@ export default function DetailedMovie({ route, navigation }) {
     // State holding the data of the selected movie.
     const [data, setData] = useState({});
 
-    // Get movieID from navigate function
+    // Get ID of movie from the navigator function
     const { movieId } = route.params;
 
     // When this component is mounted call the getDatails method
@@ -20,9 +20,7 @@ export default function DetailedMovie({ route, navigation }) {
 
     // Get details based on movieID, using api_key
     function getDetails() {
-        fetch(
-            `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.API_KEY}&language=en-US`
-        )
+        fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.API_KEY}&language=en-US`)
             .then((response) => response.json())
             .then((data) => setData(data));
     }
@@ -33,9 +31,7 @@ export default function DetailedMovie({ route, navigation }) {
             <div style={styles.divInline}>
                 <Image
                     style={styles.image}
-                    source={{
-                        uri: `https://image.tmdb.org/t/p/original${data.poster_path}`,
-                    }}
+                    source={{ uri: `https://image.tmdb.org/t/p/original${data.poster_path}`,}}
                 />
                 <View style={styles.container}>
                     <Text style={styles.text}>{data.title}</Text>
@@ -65,16 +61,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#305177",
         justifyContent: "center",
-    },
-    item: {
-        backgroundColor: "#5DACBD",
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
-    },
-    button: {
-        backgroundColor: "#5DACBD",
-        color: '#305177'
     },
     text: {
         fontSize: 75,
