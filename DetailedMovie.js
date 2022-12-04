@@ -11,26 +11,25 @@ export default function DetailedMovie({ route, navigation }) {
     const [movie, setMovie] = useState({});
 
     // Get ID of movie from the navigator function
-    const { movieId } = route.params;
+    const { movieId, posterPath } = route.params;
 
-    // When this component is mounted call the getDatails method
+    // When this component is mounted call the getDetails method
     useEffect(() => {
+        // Get details based on movieID, using api_key
+        async function getDetails() {
+            const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.API_KEY}&language=en-US`);
+            setMovie(await response.json());
+        }
         getDetails();
     }, []);
 
-    // Get details based on movieID, using api_key
-    function getDetails() {
-        fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.API_KEY}&language=en-US`)
-            .then((response) => response.json())
-            .then((data) => setMovie(data));
-    }
-
     return (
-        <div style={styles.colorForDiv}>
+        <View style={styles.coloredView}>
+
             <Topbar name={name} navigation={navigation}></Topbar>
-            <div style={styles.divInline}>
-                <Image style={styles.image}
-                    source={{ uri: `https://image.tmdb.org/t/p/original${movie.poster_path}` }}
+            <View style={styles.viewInline}>
+                <Image style={styles.image} resizeMode={'contain'}
+                    source={{ uri: `https://image.tmdb.org/t/p/original${posterPath}` }}
                 />
                 <View style={styles.container}>
                     <Text style={styles.text}>{movie.title}</Text>
@@ -43,8 +42,8 @@ export default function DetailedMovie({ route, navigation }) {
                         <Text style={styles.data}>Budget: {movie.budget}</Text>
                     </ScrollView>
                 </View>
-            </div>
-        </div>
+            </View>
+        </View>
 
 
     );
@@ -52,32 +51,33 @@ export default function DetailedMovie({ route, navigation }) {
 
 //Styles
 const styles = StyleSheet.create({
-    colorForDiv: {
+    coloredView: {
         backgroundColor: "#305177",
-        minHeight: "100%"
+        minHeight: "100%",
     },
     container: {
-        flex: 1,
         backgroundColor: "#305177",
-        justifyContent: "center",
+        flexDirection: "column",
+        flex: 1,
     },
     text: {
         fontSize: 75,
         color: '#5DACBD'
     },
-    image: {
-        flex: 1,
-        resizeMode: 'contain',
-        maxHeight: "30%",
-        maxWidth: "40%"
-    },
-    divInline: {
-        display: "flex",
+    viewInline: {
         backgroundColor: "#305177",
+        flexDirection: 'row',
+        flex: 1,
     },
     data: {
         marginBottom: 5,
         color: '#5DACBD',
         fontSize: 35
     },
+    image: { 
+        width: '40%', 
+        height: '100%', 
+        flexDirection: 'column', 
+        alignSelf: 'flex-start',
+    }
 });

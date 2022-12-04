@@ -13,16 +13,15 @@ export default function FrontPageComp({ navigation }) {
 
     // Fetch movie list once component is mounted
     useEffect(() => {
+        // Get popular movies with API key injected
+        async function fetchMovies() {
+            const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`);
+            const json = await response.json();
+            setData(json.results);
+        }
         fetchMovies();
     }, []);
 
-    // Get popular movies with API key injected
-    function fetchMovies() {
-        fetch(
-            `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
-        ).then((response) => response.json())
-            .then((data) => setData(data.results));
-    }
 
     // Render function which returns the Movie component
     const renderMovie = ({ item }) => (
@@ -39,19 +38,15 @@ export default function FrontPageComp({ navigation }) {
     // Uses a flatlist because we only need to render what the user can see.
     // as it would be too much to load them all.
     return (
-        <div>
-            <div style={styles.divInline}>
+        <View>
+            <View style={styles.viewInline}>
                 <Image style={styles.image} source={require('./assets/logo.png')} alt="Logo" />
-                <div>
+                <View>
                     <Text style={styles.text}>Welcome to MoveriesDB</Text>
-                    <div>
-                        <Text style={styles.title}>Your name: {name}</Text>
-                    </div>
-                    <div>
-                        <Button style={styles.button} variant="outlined" onClick={changeName}>Click to change your name</Button>
-                    </div>
-                </div>
-            </div>
+                    <Text style={styles.title}>Your name: {name}</Text>
+                    <Button style={styles.button} variant="outlined" onClick={changeName}>Click to change your name</Button>
+                </View>
+            </View>
             <View style={styles.container}>
                 <FlatList
                     data={data}
@@ -59,22 +54,20 @@ export default function FrontPageComp({ navigation }) {
                     keyExtractor={(movie) => movie.id}
                 />
             </View>
-        </div>
+        </View>
     );
 }
 
 //Handle clicks on movie; it navigates to details page of movie
 const Movie = ({ navigation, title, movieId, poster_path }) => (
     <View style={styles.item}>
-        <div style={styles.divCenter}>
-            <Image style={styles.imageItem}
-                source={{ uri: `https://image.tmdb.org/t/p/original${poster_path}` }}
-            />
-            <Text onPress={() => navigation.navigate("Details", { movieId })}
-                style={styles.title}>
-                {title}
-            </Text>
-        </div>
+        <Image style={styles.imageItem}
+            source={{ uri: `https://image.tmdb.org/t/p/original${poster_path}` }}
+        />
+        <Text onPress={() => navigation.navigate("Details", { movieId: movieId, posterPath: poster_path })}
+            style={styles.title}>
+            {title}
+        </Text>
     </View>
 );
 
@@ -82,12 +75,16 @@ const Movie = ({ navigation, title, movieId, poster_path }) => (
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#305177",
+        marginTop: "20px",
     },
     item: {
         backgroundColor: "#5DACBD",
         marginVertical: 8,
         marginHorizontal: 16,
         borderRadius: "25px",
+        display: "flex",
+        flexDirection: "row",
+
     },
     button: {
         backgroundColor: "#5DACBD",
@@ -107,16 +104,13 @@ const styles = StyleSheet.create({
         height: "300px",
     },
     imageItem: {
-        width: "50px",
+        width: "80px",
         height: "100px",
         display: "inline-block",
         borderRadius: "25px",
     },
-    divInline: {
-        display: "flex",
+    viewInline: {
+        flexDirection: "row",
         backgroundColor: "#305177",
     },
-    divCenter: {
-        display: "flex",
-    }
 });

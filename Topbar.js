@@ -1,12 +1,12 @@
-import { Text, StyleSheet, Image } from "react-native";
+import { Text, StyleSheet, Image, View } from "react-native";
 
 //Topbar contains image and function to return to homepage once clicked, and displays the user in the top
 export default function Topbar({ name, navigation }) {
     return (
-        <div style={styles.divInline}>
+        <View style={styles.viewInline}>
             <Image style={styles.image} source={require('./assets/logo.png')} alt="Logo" onClick={() => navigation.navigate("Home")} />
             <Text style={styles.text}>Current user: {name}</Text>
-        </div>
+        </View>
     )
 }
 
@@ -23,9 +23,10 @@ const styles = StyleSheet.create({
         width: "90px",
         height: "90px"
     },
-    divInline: {
+    viewInline: {
         display: "flex",
         paddingBottom: "10px",
         backgroundColor: "#305177",
+        flexDirection: "row",
     }
 });
