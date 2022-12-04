@@ -26,7 +26,7 @@ export default function FrontPageComp({ navigation }) {
 
     // Render function which returns the Movie component
     const renderMovie = ({ item }) => (
-        <Movie navigation={navigation} movieId={item.id} title={item.title + " (" + item.release_date.substring(0, 4) + ")"} />
+        <Movie navigation={navigation} poster_path={item.poster_path} movieId={item.id} title={item.title + " (" + item.release_date.substring(0, 4) + ")"} />
     );
 
     const changeName = () => {
@@ -64,8 +64,13 @@ export default function FrontPageComp({ navigation }) {
 }
 
 //Handle clicks on movie; it navigates to details page of movie
-const Movie = ({ navigation, title, movieId }) => (
+const Movie = ({ navigation, title, movieId, poster_path }) => (
     <View style={styles.item}>
+        <div style={styles.divCenter}>
+        <Image
+                    style={styles.imageItem}
+                    source={{ uri: `https://image.tmdb.org/t/p/original${poster_path}`,}}
+                />
         <Text
             onPress={() =>
                 navigation.navigate("Details", {
@@ -75,19 +80,18 @@ const Movie = ({ navigation, title, movieId }) => (
             style={styles.title} >
             {title}
         </Text>
+        </div>
+        
     </View>
 );
 
 //Stylesheet
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: "#305177",
-        justifyContent: "center",
     },
     item: {
         backgroundColor: "#5DACBD",
-        padding: 20,
         marginVertical: 8,
         marginHorizontal: 16,
         borderRadius: "25px",
@@ -97,7 +101,9 @@ const styles = StyleSheet.create({
         color: '#305177'
     },
     title: {
-        fontSize: 32,
+        fontSize: 50,
+        marginLeft: "10px",
+        marginVertical: "auto",
     },
     text: {
         fontSize: 75,
@@ -107,8 +113,17 @@ const styles = StyleSheet.create({
         width: "300px",
         height: "300px",
     },
+    imageItem: {
+        width: "50px",
+        height: "100px",
+        display: "inline-block",
+        borderRadius: "25px",
+    },
     divInline: {
         display: "flex",
         backgroundColor: "#305177",
+    },
+    divCenter: {
+        display: "flex",
     }
 });

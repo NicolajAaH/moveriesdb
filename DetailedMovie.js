@@ -67,8 +67,6 @@ const styles = StyleSheet.create({
         color: '#5DACBD'
     },
     image: {
-        width: null,
-        height: null,
         flex: 1,
         resizeMode: 'contain',
         maxHeight: "30%",
